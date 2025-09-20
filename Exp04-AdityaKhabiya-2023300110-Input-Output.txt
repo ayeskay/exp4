@@ -1,0 +1,32 @@
+
+--- SENDER OUTPUT (bob -> alice) ---
+Timestamp: 2025-09-19 11:50:47.018452
+Plain Text: hi
+Digitally Signed Text: 2511726414
+Encrypted Text: ,)
+--------------------------------------------------
+
+
+--- SENDER OUTPUT (alice -> bob) ---
+Timestamp: 1758263043.679598
+Plain Text: hi
+Digitally Signed Text: 1268179897
+Encrypted Text: ,<
+--------------------------------------------------
+
+
+--- SENDER OUTPUT (bob -> alice) ---
+Timestamp: 1758263067.7000408
+Plain Text: hi
+Digitally Signed Text: 2780343348
+Encrypted Text: Ur
+--------------------------------------------------
+
+
+--- SENDER OUTPUT (alice -> bob) ---
+Timestamp: 1758263102.7096684
+Plain Text: hi
+Digitally Signed Text: 1586830467
+Encrypted Text: @-
+--------------------------------------------------
+
