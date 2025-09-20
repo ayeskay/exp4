@@ -1,5 +1,6 @@
 # logger_utils.py
 import time
+import datetime
 
 STUDENT_NAME = "AdityaKhabiya"  # Replace with actual student name
 STUDENT_UID = "2023300110"    # Replace with actual student UID
@@ -31,4 +32,15 @@ def log_receiver_output(receiver_id, decrypted_text, signature_valid, plaintext)
         "------------------------------------------\n"
     )
     print(log_content)
+    log_to_file(log_content)
+
+def log_third_party_output(message):
+    log_content = (
+        f"\n--- THIRD PARTY LOG ---\n"
+        f"Timestamp: {datetime.datetime.now()}\n"
+        f"Message: {message}\n"
+        f"-----------------------\n"
+    )
+    # Also print to console to maintain original behavior
+    print(message)
     log_to_file(log_content)

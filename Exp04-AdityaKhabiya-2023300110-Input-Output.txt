@@ -1,32 +1,259 @@
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:20:19.616380
+Action: Initialization
+Details: TPE server initialized.
+------------------
 
---- SENDER OUTPUT (bob -> alice) ---
-Timestamp: 2025-09-19 11:50:47.018452
-Plain Text: hi
-Digitally Signed Text: 2511726414
-Encrypted Text: ,)
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:20:19.621543
+Action: Server Starting
+Details: Attempting to listen on localhost:4444
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:20:19.653073
+Action: Server Started
+Details: Server listening on localhost:4444
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:20:43.976165
+Action: Connection
+Details: New connection attempt from ('127.0.0.1', 44878)
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:20:43.981320
+Action: Message Received
+Details: From ('127.0.0.1', 44878): REGISTER|delta|65537|2226078301|43853
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:20:44.008935
+Action: User Registered
+Details: Identity: delta, Public Key: (65537, 2226078301), Port: 43853
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:20:44.033808
+Action: Connection Closed
+Details: Connection with ('127.0.0.1', 44878) closed.
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:20:47.257095
+Action: Connection
+Details: New connection attempt from ('127.0.0.1', 44880)
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:20:47.260961
+Action: Message Received
+Details: From ('127.0.0.1', 44880): REGISTER|charlie|65537|2718182153|60793
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:20:47.287025
+Action: User Registered
+Details: Identity: charlie, Public Key: (65537, 2718182153), Port: 60793
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:20:47.317478
+Action: Connection Closed
+Details: Connection with ('127.0.0.1', 44880) closed.
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:20:49.852167
+Action: Connection
+Details: New connection attempt from ('127.0.0.1', 49548)
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:20:49.855550
+Action: Message Received
+Details: From ('127.0.0.1', 49548): REGISTER|bravo|65537|1698136961|36169
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:20:49.879095
+Action: User Registered
+Details: Identity: bravo, Public Key: (65537, 1698136961), Port: 36169
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:20:49.903626
+Action: Connection Closed
+Details: Connection with ('127.0.0.1', 49548) closed.
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:20:51.952431
+Action: Connection
+Details: New connection attempt from ('127.0.0.1', 49564)
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:20:51.955944
+Action: Message Received
+Details: From ('127.0.0.1', 49564): REGISTER|alpha|65537|2524046873|44433
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:20:51.983719
+Action: User Registered
+Details: Identity: alpha, Public Key: (65537, 2524046873), Port: 44433
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:20:52.009226
+Action: Connection Closed
+Details: Connection with ('127.0.0.1', 49564) closed.
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:21:49.295560
+Action: Connection
+Details: New connection attempt from ('127.0.0.1', 51488)
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:21:49.323913
+Action: Message Received
+Details: From ('127.0.0.1', 51488): LOOKUP|delta
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:21:49.350016
+Action: Lookup Request
+Details: Identity 'delta' requested by ('127.0.0.1', 51488)
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:21:49.377337
+Action: Key Lookup Success
+Details: Provided key for 'delta' to ('127.0.0.1', 51488)
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:21:49.409371
+Action: Connection Closed
+Details: Connection with ('127.0.0.1', 51488) closed.
+------------------
+
+
+--- SENDER OUTPUT (alpha -> delta) ---
+Timestamp: 1758372716.328214
+Plain Text: hello-delta
+Digitally Signed Text: 1593554697
+Encrypted Text: 84K,?[C%<C@
 --------------------------------------------------
 
 
---- SENDER OUTPUT (alice -> bob) ---
-Timestamp: 1758263043.679598
-Plain Text: hi
-Digitally Signed Text: 1268179897
-Encrypted Text: ,<
---------------------------------------------------
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:21:56.334497
+Action: Connection
+Details: New connection attempt from ('127.0.0.1', 51494)
+------------------
 
 
---- SENDER OUTPUT (bob -> alice) ---
-Timestamp: 1758263067.7000408
-Plain Text: hi
-Digitally Signed Text: 2780343348
-Encrypted Text: Ur
---------------------------------------------------
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:21:56.360233
+Action: Message Received
+Details: From ('127.0.0.1', 51494): LOOKUP|alice
+------------------
 
 
---- SENDER OUTPUT (alice -> bob) ---
-Timestamp: 1758263102.7096684
-Plain Text: hi
-Digitally Signed Text: 1586830467
-Encrypted Text: @-
---------------------------------------------------
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:21:56.387798
+Action: Lookup Request
+Details: Identity 'alice' requested by ('127.0.0.1', 51494)
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:21:56.415245
+Action: Lookup Error
+Details: Identity 'alice' not found requested by ('127.0.0.1', 51494)
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:21:56.447041
+Action: Connection Closed
+Details: Connection with ('127.0.0.1', 51494) closed.
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:21:56.449069
+Action: Connection
+Details: New connection attempt from ('127.0.0.1', 51510)
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:21:56.477495
+Action: Message Received
+Details: From ('127.0.0.1', 51510): LOOKUP|alpha
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:21:56.506010
+Action: Lookup Request
+Details: Identity 'alpha' requested by ('127.0.0.1', 51510)
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:21:56.535180
+Action: Key Lookup Success
+Details: Provided key for 'alpha' to ('127.0.0.1', 51510)
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:21:56.565574
+Action: Connection Closed
+Details: Connection with ('127.0.0.1', 51510) closed.
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:25:47.076924
+Action: Server Shutdown
+Details: Server shutting down due to KeyboardInterrupt.
+------------------
+
+
+--- TPE OUTPUT ---
+Timestamp: 2025-09-20 18:25:47.086155
+Action: Server Stopped
+Details: TPE server socket closed.
+------------------
 

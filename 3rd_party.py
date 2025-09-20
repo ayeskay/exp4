@@ -2,6 +2,7 @@
 import socket
 import threading
 from config import THIRD_PARTY_HOST, THIRD_PARTY_PORT, DELIMITER, END_MARKER
+from logger_utils import log_third_party_output # Import the new logging function
 
 class ThirdParty:
     def __init__(self):
@@ -10,7 +11,7 @@ class ThirdParty:
 
     def handle_client(self, conn, addr):
         try:
-            print(f"[Third Party] Connected by {addr}")
+            log_third_party_output(f"[Third Party] Connected by {addr}")
             data = b""
             while not data.endswith(END_MARKER.encode()):
                 packet = conn.recv(4096)
@@ -18,7 +19,7 @@ class ThirdParty:
                     break
                 data += packet
             full_message = data.decode().rstrip(END_MARKER)
-            print(f"[Third Party] Received: {full_message}")
+            log_third_party_output(f"[Third Party] Received: {full_message}")
 
             parts = full_message.split(DELIMITER)
             command = parts[0]
@@ -31,12 +32,12 @@ class ThirdParty:
 
                 with self.lock:
                     self.registered_entities[identity] = {'pub_key': (e, n), 'port': port}
-                print(f"[Third Party] Registered {identity} with key ({e}, {n}) on port {port}")
+                log_third_party_output(f"[Third Party] Registered {identity} with key ({e}, {n}) on port {port}")
                 response = f"ACK{DELIMITER}Registered successfully.{END_MARKER}"
 
             elif command == "LOOKUP":
                 identity = parts[1]
-                print(f"[Third Party] Lookup request for {identity}")
+                log_third_party_output(f"[Third Party] Lookup request for {identity}")
                 with self.lock:
                     if identity in self.registered_entities:
                         e, n = self.registered_entities[identity]['pub_key']
@@ -48,10 +49,10 @@ class ThirdParty:
                 response = f"ERROR{DELIMITER}Unknown command.{END_MARKER}"
 
             conn.sendall(response.encode())
-            print(f"[Third Party] Sent response: {response}")
+            log_third_party_output(f"[Third Party] Sent response: {response}")
 
         except Exception as e:
-            print(f"[Third Party] Error handling client {addr}: {e}")
+            log_third_party_output(f"[Third Party] Error handling client {addr}: {e}")
             error_response = f"ERROR{DELIMITER}Internal server error.{END_MARKER}"
             try:
                 conn.sendall(error_response.encode())
@@ -59,7 +60,7 @@ class ThirdParty:
                 pass
         finally:
             conn.close()
-            print(f"[Third Party] Connection with {addr} closed.")
+            log_third_party_output(f"[Third Party] Connection with {addr} closed.")
 
     def start_server(self):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:

@@ -191,33 +191,12 @@ class Peer:
             return
         receiver_e, receiver_n = receiver_pub_key
 
-        # --- Session Timeout Feature ---
-        # Perform handshake or re-keying if necessary
-        # Note: This check is also done inside the main send socket block below for integration
-        # if not self.perform_handshake_if_needed(receiver_e, receiver_n, receiver_port, receiver_identity):
-        #      print("[Peer] Failed to establish/renew symmetric key.")
-        #      return
-        # -------------------------------
-
-        # Get Message from Command Line
-        message_content = input("[Peer] Enter the message to send: ")
-        try:
-            timestamp = datetime.datetime.now().isoformat()
-            # Encrypt and sign the message
-            encrypted_message = simple_sym_encrypt(message_content, self.symmetric_key)
-            signed_text = sign(encrypted_message + timestamp, self.private_key)
-            # Log sender's output
-            log_sender_output(self.identity, receiver_identity, message_content, signed_text, encrypted_message)
-        except Exception as e:
-            print(f"[Peer] Error encrypting/signing message: {e}")
-            return
         try:
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.connect((THIRD_PARTY_HOST, receiver_port))
                 
                 # --- Session Timeout Feature (Integrated into send flow) ---
                 # Check for timeout or if no key exists
-                handshake_performed = False
                 if self.is_session_timed_out() or self.symmetric_key is None:
                      print("[Peer] Generating new symmetric key (Handshake/Re-keying)...")
                      self.symmetric_key = generate_symmetric_key(SYMMETRIC_KEY_SIZE)
@@ -228,7 +207,6 @@ class Peer:
                              self.symmetric_key = None
                              return
                          encrypted_sym_key_num = encrypt(sym_key_num, receiver_e, receiver_n)
-                         handshake_performed = True
                          # Send the KEY message as part of the message flow
                          key_message = f"KEY{DELIMITER}{encrypted_sym_key_num}{END_MARKER}"
                          s.sendall(key_message.encode())
@@ -239,15 +217,21 @@ class Peer:
                          self.symmetric_key = None
                          return
 
+                # --- MOVED LOGIC STARTS HERE ---
+                # Now that the key is guaranteed to exist, get message and encrypt
+                message_content = input("[Peer] Enter the message to send: ")
+                try:
+                    timestamp = datetime.datetime.now().isoformat()
+                    encrypted_message = simple_sym_encrypt(message_content, self.symmetric_key)
+                    signed_text = sign(encrypted_message + timestamp, self.private_key)
+                    # Log sender's output
+                    log_sender_output(self.identity, receiver_identity, message_content, signed_text, encrypted_message)
+                except Exception as e:
+                    print(f"[Peer] Error encrypting/signing message: {e}")
+                    return
+                # --- MOVED LOGIC ENDS HERE ---
 
                 # Step 2: Send the MSG message on the same connection
-                # (If handshake was performed, KEY was sent first)
-                if not handshake_performed and self.symmetric_key is None:
-                    # This case should ideally not happen if perform_handshake_if_needed is called correctly
-                    # But let's add a check for robustness
-                    print("[Peer] No symmetric key available to send message.")
-                    return
-
                 msg_message = f"MSG{DELIMITER}{encrypted_message}{DELIMITER}{signed_text}{DELIMITER}{timestamp}{END_MARKER}"
                 s.sendall(msg_message.encode())
                 print(f"[Peer] Sent encrypted and signed message to {receiver_identity}.")
