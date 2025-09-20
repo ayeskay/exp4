@@ -7,7 +7,7 @@ SENDER_PORT = 2222
 RECEIVER_PORT = 3333
 
 # RSA Key Sizes (in bits)
-RSA_KEY_SIZE = 32 # For demonstration; real-world keys are much larger (1024, 2048 bits)
+RSA_KEY_SIZE = 1024 # Increased from 32. For demonstration; real-world keys are 1024, 2048 bits
 RSA_PRIME_SIZE = RSA_KEY_SIZE // 2
 
 # Symmetric Key Size (in characters)

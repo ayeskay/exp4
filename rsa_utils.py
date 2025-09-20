@@ -54,15 +54,6 @@ def gcd(a, b):
         a, b = b, a % b
     return a
 
-def mod_inverse(e, phi):
-    """Calculate the modular inverse of e mod phi using Extended Euclidean Algorithm."""
-    # Return x such that (e * x) % phi == 1
-    if phi == 0:
-        return 1, 0, e
-    else:
-        x, y, gcd_val = mod_inverse(phi, e % phi)
-        return y, x - (e // phi) * y, gcd_val
-
 def extended_gcd(a, b):
     """Extended Euclidean Algorithm."""
     if a == 0:
@@ -105,8 +96,7 @@ def generate_keys(keysize):
             g = gcd(e, phi)
 
     # 5. Determine d as the modular multiplicative inverse of e modulo phi
-    # d = mod_inverse(e, phi) # This might be slow for large numbers
-    d = modinv(e, phi) # Using extended gcd
+    d = modinv(e, phi)
 
     # Return public key (e, n) and private key (d, n)
     return (e, n), (d, n)
@@ -115,10 +105,7 @@ def text_to_number(text, base):
     """Convert text to a number using a base."""
     number = 0
     for char in text:
-        # Assuming ASCII values for simplicity, adjust if needed
-        # This simple mapping might not work well for large texts directly
-        # We'll process blocks for encryption
-        char_code = ord(char) - 32 # Map space (32) to 0
+        char_code = ord(char) - 32
         if char_code < 0 or char_code >= base:
              raise ValueError(f"Character '{char}' outside encoding range.")
         number = number * base + char_code
@@ -127,7 +114,7 @@ def text_to_number(text, base):
 def number_to_text(number, base):
     """Convert a number back to text using a base."""
     if number == 0:
-        return chr(32) # Return space for 0
+        return chr(32)
     text = ""
     while number > 0:
         char_code = number % base
@@ -137,20 +124,19 @@ def number_to_text(number, base):
 
 def encrypt(plaintext_number, public_key_e, public_key_n):
     """Encrypt a number using RSA."""
-    # c = m^e mod n
     return pow(plaintext_number, public_key_e, public_key_n)
 
 def decrypt(ciphertext_number, private_key_d, private_key_n):
     """Decrypt a number using RSA."""
-    # m = c^d mod n
     return pow(ciphertext_number, private_key_d, private_key_n)
 
 def sign(message, private_key):
     """Signs a message using the sender's private key."""
     d, n = private_key
-    # Convert message to a number
     message_number = text_to_number(message, 95)
-    # The signature is the message "encrypted" with the private key
+    # The message number MUST be less than n. Increasing key size ensures this.
+    if message_number >= n:
+        raise ValueError("Message is too large for the current key size.")
     signature = pow(message_number, d, n)
     return str(signature)
 
@@ -170,18 +156,16 @@ def verify_signature(message, signature, public_key):
 
 def generate_symmetric_key(length):
     """Generate a random symmetric key string."""
-    # Generate a string of printable ASCII characters
     chars = [chr(i) for i in range(32, 127)] # Space to ~
     return ''.join(secrets.choice(chars) for _ in range(length))
 
-# --- Simple Symmetric Encryption (For demonstration, not secure) ---
 def simple_sym_encrypt(plaintext, key):
     """Simple symmetric encryption using key as a numeric shift."""
-    key_num = sum(ord(c) for c in key) % 256 # Simple hash of key to a number
+    key_num = sum(ord(c) for c in key) % 256
     encrypted_chars = []
     for i, char in enumerate(plaintext):
         key_char = key[i % len(key)]
-        shift = (ord(key_char) + key_num) % 95 # Range of printable chars (32-126)
+        shift = (ord(key_char) + key_num) % 95
         encrypted_char_code = ((ord(char) - 32) + shift) % 95 + 32
         encrypted_chars.append(chr(encrypted_char_code))
     return ''.join(encrypted_chars)
